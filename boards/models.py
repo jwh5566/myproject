@@ -16,6 +16,9 @@ class Topic(models.Model):
     board = models.ForeignKey(Board, related_name='topics')
     starter = models.ForeignKey(User, related_name='topics')
 
+    def __str__(self):
+        return self.subject
+
 
 class Post(models.Model):
     message = models.CharField(max_length=4000)

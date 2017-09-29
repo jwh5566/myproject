@@ -17,23 +17,6 @@ def board_topics(request, pk):
 
 def new_topic(request, pk):
     board = get_object_or_404(Board, pk=pk)
-
-    # if request.method == 'POST':
-    #     subject = request.POST['subject']
-    #     message = request.POST['message']
-    #     user = User.objects.first()   # get the current logged user
-    #     topic = Topic.objects.create(
-    #         subject=subject,
-    #         board=board,
-    #         starter=user
-    #     )
-    #     post = Post.objects.create(
-    #         message=message,
-    #         topic=topic,
-    #         created_by=user
-    #     )
-    #     return redirect('board_topics', pk=board.pk)
-    # return render(request, 'new_topic.html', {'board': board})
     user = User.objects.first()
     if request.method == 'POST':
         form = NewTopicForm(request.POST)
@@ -50,4 +33,4 @@ def new_topic(request, pk):
             return redirect('board_topics', pk=board.pk)
     else:
         form = NewTopicForm()
-    return render(request, 'new_topic.html', pk=board.pk)
+    return render(request, 'new_topic.html', {'board': board, 'form': form })
