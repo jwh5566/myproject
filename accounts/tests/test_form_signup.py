@@ -5,6 +5,6 @@ from accounts.forms import SignUpForm
 class SignUpFormTest(TestCase):
     def test_form_has_fields(self):
         form = SignUpForm()
-        expected = ['username', 'email', 'possword', 'password2']
+        expected = ['username', 'email', 'password1', 'password2']
         actual = list(form.fields)
         self.assertSequenceEqual(actual, expected)
