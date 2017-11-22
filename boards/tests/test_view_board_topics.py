@@ -1,7 +1,7 @@
 from django.test import TestCase
 from django.core.urlresolvers import reverse
 from django.urls import resolve
-from boards.views import home, board_topics, new_topic
+from boards.views import home, TopicListView, new_topic
 from boards.models import Board, Topic, Post
 from django.contrib.auth.models import User
 from boards.views import new_topic
@@ -36,7 +36,7 @@ class BoardTopicsTests(TestCase):
         :return:
         """
         view = resolve('/boards/1/')
-        self.assertEquals(view.func, board_topics)
+        self.assertEquals(view.func.view_class, TopicListView)
 
     def test_board_topics_view_contains_link_back_to_home_page(self):
         """

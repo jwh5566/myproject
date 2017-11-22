@@ -1,9 +1,14 @@
 {% extends 'base.html' %}
 
 {% load static%}
+{% load humanize %}
 
 {% block title %}
     Post a reply
+{% endblock %}
+
+{% block stylesheet %}
+    <link rel="stylesheet" href="{% static 'css/simplemde.min.css' %}">
 {% endblock %}
 
 {% block breadcrumb %}
@@ -14,11 +19,11 @@
 {% endblock %}
 
 {% block content %}
-    <form method="post" class="mb-4">
+    <form method="post" class="mb-4" novalidate>
         {% csrf_token %}
         {% include 'includes/form.html' %}
         <button type="submit" class="btn btn-success">Post a reply</button>
-  </form>
+    </form>
 
 
     {% for post in topic.posts.all %}
@@ -29,11 +34,18 @@
             <strong class="text-muted">{{ post.created_by.username }}</strong>
           </div>
           <div class="col-6 text-right">
-            <small class="text-muted">{{ post.created_at }}</small>
+            <small class="text-muted">{{ post.created_at|naturaltime }}</small>
           </div>
         </div>
-        {{ post.message }}
+        {{ post.get_message_as_markdown }}
       </div>
     </div>
   {% endfor %}
+{% endblock %}
+
+{% block javascript %}
+  <script src="{% static 'js/simplemde.min.js' %}"></script>
+  <script>
+    var simplemde = new SimpleMDE();
+  </script>
 {% endblock %}
